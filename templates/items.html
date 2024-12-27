@@ -1,0 +1,23 @@
+{%extends 'layout.html' %}
+{%from 'paginate_macro.html' import render_pagination %}
+{%block title%} Товари магазину {%endblock%}
+
+{%block content%}
+
+<div class="row row-cols-4">
+	{%for item in items%}
+	<div class="col p-1">
+		<div class="shadow p-5 text-center">
+			<img src="/{{item.img}}" class="img-thumbnail">
+			<h2>{{item.name}}</h2>
+			<h5>Ціна товару: {{item.price}}</h5>
+			<a href="{{url_for('item_app.view_item',item_number=item.id)}}"><button class="btn btn-warning">Дивитись більше</button></a>
+		</div>
+	</div>
+	{%endfor%}
+</div>
+{{render_pagination(items,'item_app.view_items')}}
+
+
+{%endblock%}
+

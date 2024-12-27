@@ -1,0 +1,111 @@
+{%extends 'layout.html' %}
+
+{%block title%} Кошик користувача  {% endblock %}
+
+
+{%block content%}
+<div class="container">
+	<h1>Кошик користувача</h1>
+	<h2>Варітість товарів: {{cart.get_price()}}</h2>
+	<h6>Кількість товарів {{cart.count()}}</h6>
+
+	<hr>
+
+
+
+
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Товари у кошику
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+           {%for number,item in cart.numerated_items() %}
+			<h2>{{item.name}}</h2>
+			<h5 class="p-3">Ціна товару: {{item.price}}</h5>
+			<a href="{{url_for('cart_app.delete_item',item_number=number)}}"><button class="btn btn-danger">Вилучити товар із кошику</button></a>
+			<hr>
+		{%endfor%}
+      </div>
+    </div>
+  </div>
+
+
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Оформити замовлення
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+      	<form method="POST">
+	        {%for field in form%}
+				<h4>{{field.label}}</h4>
+				{{field(class='form-control')}}
+			{%endfor%}
+			<br>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+			<button class="btn btn-success">Оформити замовлення</button>
+		</form>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- <div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Товари у кошику
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        {%for number,item in cart.numerated_items() %}
+			<h2>{{item.name}}</h2>
+			<h5 class="p-3">Ціна товару: {{item.price}}</h5>
+			<a href="{{url_for('cart_app.delete_item',item_number=number)}}"><button class="btn btn-danger">Вилучити товар із кошику</button></a>
+			<hr>
+		{%endfor%}
+      </div>
+    </div>
+  </div>
+
+
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
+        Оформити замовлення
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+	{%for field in form%}
+		<h4>{{field.label}}</h4>
+		{{field}}
+	{%endfor%}
+      </div>
+    </div>
+  </div>
+
+</div> -->
+
+
+
+</div>
+
+
+
+{%endblock%}
